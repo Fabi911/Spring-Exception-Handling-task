@@ -10,9 +10,9 @@ import java.time.LocalDateTime;
 public class AnimalController {
 
     @ExceptionHandler(IllegalArgumentException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorMessage handleIllegalArgumentException(IllegalArgumentException exception) {
-        return new ErrorMessage(exception.getMessage(), LocalDateTime.now(),"https://www.example.com/documentation", HttpStatus.FORBIDDEN.value());
+        return new ErrorMessage(exception.getMessage(), LocalDateTime.now(),"https://www.example.com/documentation", HttpStatus.BAD_REQUEST.value());
     }
 
     @GetMapping("{species}")
