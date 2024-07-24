@@ -1,15 +1,19 @@
 package de.neuefische.springexceptionhandlingtask;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.NoSuchElementException;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/animals")
 public class AnimalController {
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ErrorMessage handleIllegalArgumentException(IllegalArgumentException exception) {
+        return new ErrorMessage(exception.getMessage(), LocalDateTime.now(),"https://www.example.com/documentation", HttpStatus.FORBIDDEN.value());
+    }
 
     @GetMapping("{species}")
     String getAnimalSpecies(@PathVariable String species) {
